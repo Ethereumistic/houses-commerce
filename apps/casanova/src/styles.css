@@ -265,6 +265,27 @@ body {
 .catalog-tabs {
   gap: 30px;
 }
+.catalog-status {
+  padding: 24px 0;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+.catalog-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+.house-image-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  color: var(--muted-foreground);
+}
+.house-price {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
 .catalog-filters {
   padding: 5px;
   border-radius: 100px;
@@ -640,6 +661,7 @@ body {
   line-height: 1.2;
 }
 .detail-description {
+  white-space: pre-line;
   font-size: 14px;
   line-height: 1.8;
   margin-top: 16px;

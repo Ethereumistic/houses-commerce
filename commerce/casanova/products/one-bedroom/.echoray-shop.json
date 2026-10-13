@@ -1,0 +1,11 @@
+{
+  "handle": "one-bedroom",
+  "productId": "m177crpsc69ny1sm595r53g5yn8g601h",
+  "images": {
+    "../../../../apps/casanova/public/images/one-bedroom.webp": {
+      "sha256": "7f35754a343b401333a741efdc97c47c3bc89905e53ecf6312e9749454ad4bf8",
+      "storageId": "kg2e9v2tsvvqcqmthfe0313esh8g6xs5"
+    }
+  },
+  "pushedAt": "2026-10-13T13:54:20.134Z"
+}

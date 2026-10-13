@@ -1,5 +1,9 @@
-import { useRef, useState } from "react"
-import { createFileRoute } from "@tanstack/react-router"
+import { useCallback, useEffect, useRef, useState } from "react"
+import {
+  createFileRoute,
+  useRouter,
+  useRouterState,
+} from "@tanstack/react-router"
 import {
   ArrowDown,
   ArrowUpRight,
@@ -40,15 +44,29 @@ import {
   TabsTrigger,
 } from "@workspace/ui/components/tabs"
 import {
-  categoryLabels,
   contact,
   footprint,
-  houses,
+  houses as houseReferences,
   inquiryHref,
 } from "../data/houses"
-import type { House } from "../data/houses"
+import { useFreshnessRefresh } from "@workspace/ui/hooks/use-freshness-refresh"
+import {
+  getCatalogPage,
+  getProductDetail,
+  inquiryForProduct,
+  productPrice,
+  validateCatalogFilters,
+} from "../lib/commerce"
+import type { ProductDetail, StoreCard, StoreImage } from "../lib/commerce"
 
-export const Route = createFileRoute("/")({ component: Homepage })
+export const Route = createFileRoute("/")({
+  validateSearch: validateCatalogFilters,
+  loaderDeps: ({ search }) => search,
+  loader: ({ deps }) => getCatalogPage({ data: deps }),
+  staleTime: 0,
+  preloadStaleTime: 0,
+  component: Homepage,
+})
 
 const navigation = [
   { href: "#houses", label: "Нашите къщи" },
@@ -138,14 +156,44 @@ function HouseImage({
   )
 }
 
+function CatalogImage({
+  image,
+  name,
+  detail = false,
+}: {
+  image?: StoreImage
+  name: string
+  detail?: boolean
+}) {
+  if (!image) return <div className="house-image-placeholder">{name}</div>
+  return (
+    <img
+      src={detail ? image.detail : image.src}
+      srcSet={image.srcSet}
+      sizes={
+        detail
+          ? "(max-width: 640px) 100vw, 900px"
+          : "(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
+      }
+      width={image.width || 1672}
+      height={image.height || 941}
+      alt={image.alt || `Casanova ${name} — концептуална визуализация`}
+      loading={detail ? "eager" : "lazy"}
+      decoding="async"
+    />
+  )
+}
+
 function HouseCard({
   house,
   onSelect,
 }: {
-  house: House
-  onSelect: (house: House) => void
+  house: StoreCard
+  onSelect: (house: StoreCard) => void
 }) {
-  const size = footprint(house)
+  // Reference geometry stays in houses.ts; membership, names and photos come from Commerce.
+  const reference = houseReferences.find((model) => model.id === house.slug)
+  const size = reference ? footprint(reference) : null
   return (
     <article className="house-card">
       <Button
@@ -154,98 +202,133 @@ function HouseCard({
         onClick={() => onSelect(house)}
         aria-label={`Разгледайте ${house.name}`}
       >
-        <HouseImage
-          id={house.id}
-          alt={`Casanova ${house.name} — ${categoryLabels[house.category].toLowerCase()}, ${size.length} × ${size.width} м`}
-        />
+        <CatalogImage image={house.images[0]} name={house.name} />
         <span className="house-image-action">
           <ArrowUpRight aria-hidden="true" />
         </span>
       </Button>
       <div className="house-card-heading">
         <h3>{house.name}</h3>
-        <span>
-          {size.length} × {size.width} м
-        </span>
+        {size && (
+          <span>
+            {size.length} × {size.width} м
+          </span>
+        )}
       </div>
-      <p className="house-category">{categoryLabels[house.category]}</p>
-      <div className="house-card-bottom">
-        <div className="house-room-list">
-          <span>
-            <BedDouble aria-hidden="true" />
-            {house.bedrooms === 0
-              ? "Студио"
-              : `${house.bedrooms} ${house.bedrooms === 1 ? "спалня" : "спални"}`}
-          </span>
-          <span>
-            <Bath aria-hidden="true" />
-            {house.bathrooms} {house.bathrooms === 1 ? "баня" : "бани"}
-          </span>
+      <p className="house-category">{house.collection}</p>
+      {reference && (
+        <div className="house-card-bottom">
+          <div className="house-room-list">
+            <span>
+              <BedDouble aria-hidden="true" />
+              {reference.bedrooms === 0
+                ? "Студио"
+                : `${reference.bedrooms} ${reference.bedrooms === 1 ? "спалня" : "спални"}`}
+            </span>
+            <span>
+              <Bath aria-hidden="true" />
+              {reference.bathrooms}{" "}
+              {reference.bathrooms === 1 ? "баня" : "бани"}
+            </span>
+          </div>
+          {size && <span className="house-area">{size.area} м²</span>}
         </div>
-        <span className="house-area">{size.area} м²</span>
+      )}
+      <div className="house-card-bottom">
+        <span className="house-price">{productPrice(house)}</span>
+        <Button
+          variant="ghost"
+          onClick={() => onSelect(house)}
+          aria-label={`Подробности за ${house.name}`}
+        >
+          Подробности <ArrowUpRight aria-hidden="true" />
+        </Button>
       </div>
     </article>
   )
 }
 
-function HouseDetails({ house }: { house: House }) {
-  const size = footprint(house)
+function HouseDetails({ house }: { house: StoreCard }) {
+  const [detail, setDetail] = useState<ProductDetail | null>(null)
+  const request = useRef<AbortController | null>(null)
+  const load = useCallback(async () => {
+    request.current?.abort()
+    const controller = new AbortController()
+    request.current = controller
+    setDetail(null)
+    try {
+      const result = await getProductDetail({
+        data: house.slug,
+        signal: controller.signal,
+      })
+      if (!controller.signal.aborted) setDetail(result)
+    } catch {
+      if (!controller.signal.aborted)
+        setDetail({ status: "unavailable", product: null })
+    }
+  }, [house.slug])
+  useEffect(() => {
+    void load()
+    return () => request.current?.abort()
+  }, [load])
+  useFreshnessRefresh(detail?.loadedAt, 30_000, load)
+  const product = detail?.product
   return (
     <>
-      <div className="detail-image">
-        <HouseImage
-          id={house.id}
-          alt={`Архитектурна визуализация на Casanova ${house.name}`}
-          hero
-        />
-      </div>
+      {product && (
+        <div className="detail-image">
+          <CatalogImage image={product.images[0]} name={product.name} detail />
+        </div>
+      )}
       <div className="detail-body">
-        <p className="detail-category">{categoryLabels[house.category]}</p>
+        <p className="detail-category">
+          {product?.collection || house.collection}
+        </p>
         <DialogTitle className="detail-title">
-          Casanova {house.name}
+          Casanova {product?.name || house.name}
         </DialogTitle>
         <DialogDescription className="detail-description">
-          {house.description}
+          {product
+            ? product.description
+            : !detail
+              ? "Зареждаме подробностите за модела…"
+              : detail.status === "not-found"
+                ? "Този модел вече не е в каталога."
+                : "Подробностите временно не са достъпни. Опитайте отново."}
         </DialogDescription>
-        <dl className="detail-specs">
-          <div>
-            <dt>Габарити</dt>
-            <dd>
-              {size.length} × {size.width} м
-            </dd>
-          </div>
-          <div>
-            <dt>Габаритна площ</dt>
-            <dd>{size.area} м²</dd>
-          </div>
-          <div>
-            <dt>Спални / бани</dt>
-            <dd>
-              {house.bedrooms === 0 ? "Студио" : house.bedrooms} /{" "}
-              {house.bathrooms}
-            </dd>
-          </div>
-        </dl>
-        <ul className="detail-features">
-          {house.features.map((feature) => (
-            <li key={feature}>
-              <Check aria-hidden="true" />
-              {feature}
-            </li>
-          ))}
-        </ul>
-        <p className="detail-note">
-          Ориентировъчни габарити, закръглени нагоре до цели метри, без тераса и
-          стъпала. Изображението е концептуална визуализация. Разпределението и
-          изпълнението се уточняват с индивидуален проект.
-        </p>
-        <ButtonLink
-          className="brand-button detail-inquiry"
-          href={inquiryHref(house)}
-        >
-          Изпратете запитване
-          <ArrowUpRight aria-hidden="true" />
-        </ButtonLink>
+        {detail?.status === "unavailable" && !detail.retryAfterSeconds && (
+          <Button variant="outline" onClick={() => void load()}>
+            Опитайте отново
+          </Button>
+        )}
+        {product && (
+          <>
+            <dl className="detail-specs">
+              {product.specifications.map((spec) => (
+                <div key={spec.label}>
+                  <dt>{spec.label}</dt>
+                  <dd>{spec.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <ul className="detail-features">
+              {product.features.map((feature) => (
+                <li key={feature}>
+                  <Check aria-hidden="true" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <p className="detail-note">{productPrice(product)}</p>
+            <ButtonLink
+              className="brand-button detail-inquiry"
+              href={inquiryForProduct(product)}
+            >
+              Изпратете запитване
+              <ArrowUpRight aria-hidden="true" />
+            </ButtonLink>
+          </>
+        )}
       </div>
       <DialogClose
         className="detail-close"
@@ -265,9 +348,25 @@ function HouseDetails({ house }: { house: House }) {
 
 function Homepage() {
   const dialogRef = useRef<HTMLDivElement>(null)
-  const [selectedHouse, setSelectedHouse] = useState<House | null>(null)
+  const [selectedHouse, setSelectedHouse] = useState<StoreCard | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const featuredHouse = houses[5]
+  const catalog = Route.useLoaderData()
+  const search = Route.useSearch()
+  const navigate = Route.useNavigate()
+  const router = useRouter()
+  const pending = useRouterState({ select: (state) => state.isLoading })
+  const selectedCategory = search.collection || "all"
+  const featuredHouse = catalog.products.find(
+    (product) => product.slug === "xl-10"
+  )
+  useFreshnessRefresh(catalog.loadedAt, 30_000, () => router.invalidate())
+  const selectCategory = (value: unknown) => {
+    if (typeof value !== "string") return
+    void navigate({
+      search: value === "all" ? {} : { collection: value },
+      resetScroll: false,
+    })
+  }
   return (
     <div className="casanova-site" id="top">
       <a className="skip-link" href="#main">
@@ -359,21 +458,25 @@ function Homepage() {
               <ArrowDown aria-hidden="true" />
             </ButtonLink>
           </div>
-          <Button
-            className="hero-feature"
-            variant="ghost"
-            onClick={() => setSelectedHouse(featuredHouse)}
-          >
-            <span>
-              <span className="hero-feature-name">Casanova XL 10</span>
-              <span className="hero-feature-dimensions">
-                12 × 8 м · две спални
+          {featuredHouse && (
+            <Button
+              className="hero-feature"
+              variant="ghost"
+              onClick={() => setSelectedHouse(featuredHouse)}
+            >
+              <span>
+                <span className="hero-feature-name">
+                  Casanova {featuredHouse.name}
+                </span>
+                <span className="hero-feature-dimensions">
+                  Разгледайте модела
+                </span>
               </span>
-            </span>
-            <span className="hero-feature-icon">
-              <ArrowUpRight aria-hidden="true" />
-            </span>
-          </Button>
+              <span className="hero-feature-icon">
+                <ArrowUpRight aria-hidden="true" />
+              </span>
+            </Button>
+          )}
         </section>
 
         <section
@@ -406,41 +509,116 @@ function Homepage() {
           <div className="section-heading">
             <h2 id="catalog-title">Намерете вашия дом.</h2>
             <p>
-              Шест модела. Различни възможности.
+              Различни модели. Различни възможности.
               <br />
               Една отправна точка — вие.
             </p>
           </div>
-          <Tabs defaultValue="all" className="catalog-tabs">
+          <Tabs
+            value={selectedCategory}
+            onValueChange={selectCategory}
+            className="catalog-tabs"
+          >
             <TabsList
               className="catalog-filters"
               aria-label="Филтър по конструкция"
             >
-              <TabsTrigger value="all">
-                Всички къщи <span>6</span>
-              </TabsTrigger>
-              <TabsTrigger value="timber">
-                Дървени <span>2</span>
-              </TabsTrigger>
-              <TabsTrigger value="steel">
-                Метални <span>4</span>
-              </TabsTrigger>
+              <TabsTrigger value="all">Всички къщи</TabsTrigger>
+              {catalog.categories.map((category) => (
+                <TabsTrigger key={category.name} value={category.name}>
+                  {category.name}
+                </TabsTrigger>
+              ))}
             </TabsList>
-            {["all", "timber", "steel"].map((category) => (
+            {[
+              ...new Set([
+                "all",
+                ...catalog.categories.map((category) => category.name),
+                selectedCategory,
+              ]),
+            ].map((category) => (
               <TabsContent key={category} value={category}>
-                <div className="house-grid">
-                  {houses
-                    .filter(
-                      (house) =>
-                        category === "all" || house.category === category
-                    )
-                    .map((house) => (
-                      <HouseCard
-                        key={house.id}
-                        house={house}
-                        onSelect={setSelectedHouse}
-                      />
-                    ))}
+                <div aria-busy={pending}>
+                  {pending && (
+                    <p role="status" className="catalog-status">
+                      Зареждаме моделите…
+                    </p>
+                  )}
+                  {catalog.status === "unavailable" ? (
+                    <div className="catalog-status" role="alert">
+                      <p>
+                        Каталогът временно не е достъпен. Опитайте отново или се
+                        свържете с нас.
+                      </p>
+                      {catalog.restartPagination ? (
+                        <Button
+                          variant="outline"
+                          onClick={() =>
+                            void navigate({
+                              search: { collection: search.collection },
+                              resetScroll: false,
+                            })
+                          }
+                        >
+                          Първа страница
+                        </Button>
+                      ) : (
+                        !catalog.retryAfterSeconds && (
+                          <Button
+                            variant="outline"
+                            onClick={() => void router.invalidate()}
+                          >
+                            Опитайте отново
+                          </Button>
+                        )
+                      )}
+                    </div>
+                  ) : !catalog.products.length ? (
+                    <p className="catalog-status">
+                      Все още няма публикувани модели в тази категория.
+                    </p>
+                  ) : (
+                    <div className="house-grid">
+                      {catalog.products.map((house) => (
+                        <HouseCard
+                          key={house.id}
+                          house={house}
+                          onSelect={setSelectedHouse}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  <div className="catalog-pagination">
+                    {search.cursor && (
+                      <Button
+                        variant="outline"
+                        onClick={() =>
+                          void navigate({
+                            search: { collection: search.collection },
+                            resetScroll: false,
+                          })
+                        }
+                      >
+                        Първа страница
+                      </Button>
+                    )}
+                    {catalog.cursor && (
+                      <Button
+                        variant="outline"
+                        onClick={() =>
+                          void navigate({
+                            search: {
+                              collection: search.collection,
+                              cursor: catalog.cursor || undefined,
+                            },
+                            resetScroll: false,
+                          })
+                        }
+                      >
+                        Следващи модели
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </TabsContent>
             ))}
@@ -613,7 +791,9 @@ function Homepage() {
           className="house-dialog"
           showCloseButton={false}
         >
-          {selectedHouse && <HouseDetails house={selectedHouse} />}
+          {selectedHouse && (
+            <HouseDetails key={selectedHouse.slug} house={selectedHouse} />
+          )}
         </DialogContent>
       </Dialog>
     </div>

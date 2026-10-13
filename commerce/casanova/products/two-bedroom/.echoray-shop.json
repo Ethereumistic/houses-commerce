@@ -1,0 +1,11 @@
+{
+  "handle": "two-bedroom",
+  "productId": "m17ej4vsdenkaps1c13882gfyn8g7dgy",
+  "images": {
+    "../../../../apps/casanova/public/images/two-bedroom.webp": {
+      "sha256": "29268f9b9068f5f4979a3b5f666d2950930ff7c5e6aa86b2501479cadefcac42",
+      "storageId": "kg2bzqwv92vkr9bt8e6ttgdr498g77vm"
+    }
+  },
+  "pushedAt": "2026-10-13T13:54:20.962Z"
+}

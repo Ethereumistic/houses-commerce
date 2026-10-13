@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DotwellKnownEchorayStorefrontRouteImport } from './routes/[.]well-known.echoray-storefront'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DotwellKnownEchorayStorefrontRoute =
+  DotwellKnownEchorayStorefrontRouteImport.update({
+    id: '/.well-known/echoray-storefront',
+    path: '/.well-known/echoray-storefront',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/.well-known/echoray-storefront': typeof DotwellKnownEchorayStorefrontRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/.well-known/echoray-storefront': typeof DotwellKnownEchorayStorefrontRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/.well-known/echoray-storefront': typeof DotwellKnownEchorayStorefrontRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/.well-known/echoray-storefront'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/.well-known/echoray-storefront'
+  id: '__root__' | '/' | '/.well-known/echoray-storefront'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DotwellKnownEchorayStorefrontRoute: typeof DotwellKnownEchorayStorefrontRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/echoray-storefront': {
+      id: '/.well-known/echoray-storefront'
+      path: '/.well-known/echoray-storefront'
+      fullPath: '/.well-known/echoray-storefront'
+      preLoaderRoute: typeof DotwellKnownEchorayStorefrontRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DotwellKnownEchorayStorefrontRoute: DotwellKnownEchorayStorefrontRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

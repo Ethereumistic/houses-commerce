@@ -1,0 +1,11 @@
+{
+  "handle": "studio",
+  "productId": "m17941ehrd4tg8h6d5m5envem18g6cwp",
+  "images": {
+    "../../../../apps/casanova/public/images/studio.webp": {
+      "sha256": "33fc0da9dfdab9416edc2ad67fdb60aa74bc686aa85125203b7d33e8f34a8848",
+      "storageId": "kg216qq6c40zz5q06sbyc7p3m58g65yb"
+    }
+  },
+  "pushedAt": "2026-10-13T13:54:20.524Z"
+}

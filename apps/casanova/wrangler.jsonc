@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "casanova",
+  "account_id": "ccb39f37d9a46c36f7ded1cc121968a8",
+  "main": "./src/server.ts",
+  "compatibility_date": "2026-10-13",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [{ "pattern": "casanova.echoray.cloud", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  "vars": {
+    "STOREFRONT_BUSINESS_ID": "ks7b2qvhzs7ekqgbnavv1hedps8g6e7y",
+    "STOREFRONT_GATEWAY_URL": "https://commerce.echoray.io",
+    "STOREFRONT_PUBLIC_INTEGRATION_ID": "p175bnas6hrc98w4gm8tbb94yx8g6sw1",
+  },
+}

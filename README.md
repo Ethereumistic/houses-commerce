@@ -47,6 +47,58 @@ vp run lint
 vp run build
 ```
 
+## Casa Nova hosting and Commerce
+
+Casa Nova deploys to the Cloudflare Worker `casanova`, with the custom domain
+<https://casanova.echoray.cloud>. Its Echoray business is
+[`ks7b2qvhzs7ekqgbnavv1hedps8g6e7y`](https://dev.echoray.io/dashboard/ks7b2qvhzs7ekqgbnavv1hedps8g6e7y).
+Cloudflare settings are in `apps/casanova/wrangler.jsonc`. Deploy from the root:
+
+```bash
+pnpm --filter casanova deploy
+```
+
+The Cloudflare Vite adapter applies to production builds; local development
+continues to use the existing Vite server. Deployments preserve dashboard-managed
+variables and secret bindings.
+
+Gateway `p175bnas6hrc98w4gm8tbb94yx8g6sw1` was registered and domain-verified on
+2026-10-13. Its integration ID, integration secret and domain challenge are saved
+as protected Worker bindings. The challenge endpoint returns HTTP 200 with the
+registered challenge. The Commerce catalog is published with six inquiry-only
+house models. The homepage reads category names, category-filtered product pages,
+main photos and product details through the standalone Echoray public-catalog SDK.
+Tabs use exact Commerce category names in the `collection` search parameter.
+Card reference geometry remains in `houses.ts`; dialog specifications come from
+Commerce. Router data refreshes within 30 seconds while visible, and responses
+use `Cache-Control: no-store`. Gateway failures have an explicit unavailable state.
+Product seed files and upload manifests live in `commerce/casanova/products`.
+Their approved internal price is EUR 0, with zero made-to-order capacity; the
+website displays “Цена по запитване” and keeps the inquiry workflow.
+
+Domains are managed in Echoray Commerce (admin.echoray.io) → Settings → Website and
+domain, not in Payments. This business is linked to the `casanova` Worker there, so
+Echoray attaches every domain added on that page to this Worker as a zone route and
+keeps the Worker's `STOREFRONT_ORIGIN` secret set to the shop's address. Requests on
+any other connected host redirect to that address (`src/server.ts`). Keep
+`STOREFRONT_ORIGIN` out of `wrangler.jsonc` `vars`: a plain variable blocks the secret.
+Keep the `routes` in `wrangler.jsonc` to custom domains only. A deploy replaces the
+Worker's custom domains, and it would also replace the routes Echoray added if the
+config listed plain routes. Public catalog consumption is implemented; shopper
+authentication and checkout remain outside this inquiry-only website.
+
+For catalog administration with the installed Echoray Commerce CLI, save the
+shop API key through its hidden terminal prompt into the OS keyring:
+
+```bash
+node ~/.codex/skills/echoray-commerce/scripts/commerce.mjs auth setup --profile casanova --expect-shop 'Casa Nova'
+node ~/.codex/skills/echoray-commerce/scripts/commerce.mjs shop --profile casanova
+```
+
+Always select `--profile casanova` for Casa Nova catalog operations. This shop
+administration key is separate from the storefront integration secret. Never
+store either credential in source files or client environment variables.
+
 ## Adding components
 
 Install components once in the shared UI package from the monorepo root:
