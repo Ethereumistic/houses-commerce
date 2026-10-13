@@ -1,0 +1,59 @@
+{
+  "mode": "built-in image_gen",
+  "palette": {
+    "white": "#fefefe",
+    "graphite": "#242826",
+    "mist": "#eef0ed",
+    "red": "#bc2628",
+    "timber": "#9a7652",
+    "forest": "#53634c"
+  },
+  "typography": "Manrope Variable, clear open geometric forms with Cyrillic support",
+  "layout": "Quiet white navigation / immersive landscape hero / generous introduction / three-column house catalog / material story / process and FAQ / direct contact",
+  "wireframe": [
+    "[brand       houses materials process       contact]",
+    "[             landscape photograph               ]",
+    "[   Bulgarian headline             featured home ]",
+    "[ introduction              six house categories ]",
+    "[ house              house                 house ]",
+    "[ house              house                 house ]",
+    "[ photograph                    material story   ]",
+    "[ process and frequently asked questions         ]",
+    "[ direct contact                           footer]"
+  ],
+  "review": "The architectural imagery is the focal point. Avoid marketing badges, generic card shadows and decorative gradients; use Casanova red sparingly for actions and its brochure-inspired roof mark.",
+  "prompts": [
+    {
+      "key": "hero",
+      "prompt": "Use case: photorealistic-natural. Asset type: premium Casanova house website architectural photograph. Generate one single photorealistic exterior photograph, landscape 16:9, not a collage. Contemporary single-storey European small home with precisely detailed vertical timber or ribbed cladding, a low pitched dark standing-seam roof, slim dark window frames, realistic glass reflections, restrained natural landscaping, tactile materials. Bulgarian foothills setting, oak trees, softly rolling hills, gravel and native grasses. Editorial architecture photography, natural warm daylight, straight verticals, 35mm lens, believable construction proportions. No text, logos, watermarks, people, cars, second buildings, distorted windows, fantastical structures, excessive luxury decorations. Primary request: a beautiful 12 metre long by 8 metre deep single-storey timber-clad pavilion, generously proportioned but compact, glazed living room doors, warm oak deck, honey-coloured cedar on the long front facade, a pale stone end wall, soft morning light. Composition: very wide camera far enough back to show entire house and meadow, house in the lower middle and right half, hill and muted pale sky in the upper third for a website heading, foreground meadow and stepping stones. Input images 1 and 2 are reference brochures ONLY for Casanova's material language and architectural character; do not reproduce their text, layout, logos or multi-storey house. Highest-quality architectural photography with real wood grain, slight material imperfections and delicate tree shadows.",
+      "references": [
+        "C:/Users/badja/Documents/Projects_Developement/Websites/houses-commerce/assets/1.jpg",
+        "C:/Users/badja/Documents/Projects_Developement/Websites/houses-commerce/assets/2.jpg"
+      ]
+    },
+    {
+      "key": "studio",
+      "prompt": "Use case: photorealistic-natural. Asset type: premium Casanova house website architectural photograph. Generate one single photorealistic exterior photograph, landscape 16:9, not a collage. Contemporary single-storey European small home with precisely detailed vertical timber or ribbed cladding, a low pitched dark standing-seam roof, slim dark window frames, realistic glass reflections, restrained natural landscaping, tactile materials. Bulgarian foothills setting, oak trees, softly rolling hills, gravel and native grasses. Editorial architecture photography, natural warm daylight, straight verticals, 35mm lens, believable construction proportions. No text, logos, watermarks, people, cars, second buildings, distorted windows, fantastical structures, excessive luxury decorations. Subject: compact 9 metre long by 5 metre deep wooden studio house, honey cedar vertical boards, glass French doors near the left, two smaller windows, intimate front timber step/deck, simple pitched roof. Clearly the smallest model, no extra wings. Three-quarter front view of the entire building nestled in a green garden. House fills 65 percent of frame. Soft morning sunlight."
+    },
+    {
+      "key": "one-bedroom",
+      "prompt": "Use case: photorealistic-natural. Asset type: premium Casanova house website architectural photograph. Generate one single photorealistic exterior photograph, landscape 16:9, not a collage. Contemporary single-storey European small home with precisely detailed vertical timber or ribbed cladding, a low pitched dark standing-seam roof, slim dark window frames, realistic glass reflections, restrained natural landscaping, tactile materials. Bulgarian foothills setting, oak trees, softly rolling hills, gravel and native grasses. Editorial architecture photography, natural warm daylight, straight verticals, 35mm lens, believable construction proportions. No text, logos, watermarks, people, cars, second buildings, distorted windows, fantastical structures, excessive luxury decorations. Subject: 12 metre long by 5 metre deep elongated one-bedroom wooden home, pale natural larch vertical slats, muted white end wall, generous glass double door into living room, separate bedroom window, dark standing-seam gabled roof, small wooden terrace. Three-quarter front view with entire building filling 65 percent of frame. Leafy European garden in late afternoon sunshine."
+    },
+    {
+      "key": "two-bedroom",
+      "prompt": "Use case: photorealistic-natural. Asset type: premium Casanova house website architectural photograph. Generate one single photorealistic exterior photograph, landscape 16:9, not a collage. Contemporary single-storey European small home with precisely detailed vertical timber or ribbed cladding, a low pitched dark standing-seam roof, slim dark window frames, realistic glass reflections, restrained natural landscaping, tactile materials. Bulgarian foothills setting, oak trees, softly rolling hills, gravel and native grasses. Editorial architecture photography, natural warm daylight, straight verticals, 35mm lens, believable construction proportions. No text, logos, watermarks, people, cars, second buildings, distorted windows, fantastical structures, excessive luxury decorations. Subject: slender 15 metre long by 5 metre deep two-bedroom home, the most elongated model. Beautiful light ivory ribbed exterior with warm oak accent section around tall glazed living-room doors, visible bedroom windows along the front, simple pitched charcoal steel roof and small timber terrace. Three-quarter wide front view showing the full long narrow house. Fill 70 percent of frame. Sunny garden and gentle green foothills."
+    },
+    {
+      "key": "xl-8",
+      "prompt": "Use case: photorealistic-natural. Asset type: premium Casanova house website architectural photograph. Generate one single photorealistic exterior photograph, landscape 16:9, not a collage. Contemporary single-storey European small home with precisely detailed vertical timber or ribbed cladding, a low pitched dark standing-seam roof, slim dark window frames, realistic glass reflections, restrained natural landscaping, tactile materials. Bulgarian foothills setting, oak trees, softly rolling hills, gravel and native grasses. Editorial architecture photography, natural warm daylight, straight verticals, 35mm lens, believable construction proportions. No text, logos, watermarks, people, cars, second buildings, distorted windows, fantastical structures, excessive luxury decorations. Subject: 10 metre long by 8 metre deep two-bedroom steel-frame pavilion, compact wide rectangular form, low pitched dark roof, muted deep sage vertical cladding with cedar window surrounds, floor-to-ceiling living room doors, slim elegant canopy, timber entry deck. Three-quarter front view entire house filling 65 percent of frame, morning sunlight, garden and distant wooded foothills."
+    },
+    {
+      "key": "xl-9",
+      "prompt": "Use case: photorealistic-natural. Asset type: premium Casanova house website architectural photograph. Generate one single photorealistic exterior photograph, landscape 16:9, not a collage. Contemporary single-storey European small home with precisely detailed vertical timber or ribbed cladding, a low pitched dark standing-seam roof, slim dark window frames, realistic glass reflections, restrained natural landscaping, tactile materials. Bulgarian foothills setting, oak trees, softly rolling hills, gravel and native grasses. Editorial architecture photography, natural warm daylight, straight verticals, 35mm lens, believable construction proportions. No text, logos, watermarks, people, cars, second buildings, distorted windows, fantastical structures, excessive luxury decorations. Subject: 11 metre long by 8 metre deep two-bedroom steel-frame pavilion, broad rectangular plan, ivory vertical cladding with warm oak-lined porch recess, low pitched graphite standing seam roof, large black-frame sliding doors, separate bedroom windows, narrow front wood deck. Three-quarter front view entire house filling 65 percent of frame. Soft golden afternoon sun, natural European meadow garden."
+    },
+    {
+      "key": "xl-10",
+      "prompt": "Use case: photorealistic-natural. Asset type: premium Casanova house website architectural photograph. Generate one single photorealistic exterior photograph, landscape 16:9, not a collage. Contemporary single-storey European small home with precisely detailed vertical timber or ribbed cladding, a low pitched dark standing-seam roof, slim dark window frames, realistic glass reflections, restrained natural landscaping, tactile materials. Bulgarian foothills setting, oak trees, softly rolling hills, gravel and native grasses. Editorial architecture photography, natural warm daylight, straight verticals, 35mm lens, believable construction proportions. No text, logos, watermarks, people, cars, second buildings, distorted windows, fantastical structures, excessive luxury decorations. Subject: 12 metre long by 8 metre deep steel-frame home, the largest model, broad single-storey rectangular pavilion. Warm honey oak vertical front cladding, pale limestone-coloured end wall, low pitched charcoal standing seam roof, very generous living room glazing and multiple bedroom windows, simple cedar terrace. Three-quarter front view entire building filling 70 percent of frame. Premium architecture magazine cover quality, soft afternoon light, native grasses and wooded Bulgarian foothills."
+    }
+  ]
+}

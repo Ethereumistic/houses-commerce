@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "turbo run dev --filter=casanova --filter=allinone --concurrency=3 --ui=stream",
     "lint": "turbo lint",
+    "ui:add": "pnpm dlx shadcn@latest add --cwd packages/ui",
     "format": "turbo format",
     "typecheck": "turbo typecheck"
   },

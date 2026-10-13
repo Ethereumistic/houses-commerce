@@ -1,0 +1,81 @@
+{
+  "mode": "built-in image_gen",
+  "palette": {
+    "white": "#fcfcfa",
+    "ink": "#26352c",
+    "green": "#245e42",
+    "mist": "#eef2ec",
+    "lightGreen": "#e3ebe1",
+    "timber": "#a17854"
+  },
+  "typography": "Manrope Variable: shared family identity with Casanova, open geometric forms and Bulgarian Cyrillic.",
+  "layout": "Quiet green wordmark and navigation / immersive garden pavilion hero / introductory sentence / six-category visual collection / prominent ceramic roofing story / oak furniture and maintenance / process / FAQ / project inquiry.",
+  "wireframe": [
+    "[all in one     collections roofing craft      inquiry]",
+    "[                 garden pavilion hero               ]",
+    "[  More life outside                   collection CTA]",
+    "[           introduction to timber and living        ]",
+    "[  canopies and pergolas          garden swings      ]",
+    "[ veranda       furniture       tiles      lighting  ]",
+    "[        full-width ceramic roofing photograph       ]",
+    "[ roofing details                       materials    ]",
+    "[ custom furniture photograph            craft story]",
+    "[ process                FAQs                contact ]"
+  ],
+  "review": "Keep the family resemblance to Casanova without copying its house catalog. The pavilion is the hero; a smaller four-category row prevents repetitive cards. Ceramic roofing has its own full-width photo section, and the handmade swing and joinery anchor the brand in its brochures.",
+  "prompts": [
+    {
+      "key": "garden-pavilion",
+      "prompt": "Use case: photorealistic-natural. Asset type: architectural product photography for All in One, a Bulgarian bespoke timber, roofing and furnishing company. A single landscape 16:9 image, extremely photorealistic architectural magazine photography, tactile real materials, natural colour, authentic European garden, 35mm lens, straight verticals. No text, no logos, no watermark, no collage, no people, no distorted or impossible joinery. Reference brochure is only for the product's design language; never reproduce brochure text or layout. Subject: a premium freestanding rectangular solid-timber garden pavilion, broad warm oak posts, elegant slatted wall on one side, timber roof with clean slim fascia, open on two sides, lounge with low pale linen sofas, bespoke oak coffee table and cushions. The design should closely evoke the wooden lounge canopy on reference brochure 3. Surroundings: lush Bulgarian garden with native plants, hydrangeas, mature trees and distant hills, stepping-stone path. Composition: whole pavilion framed generously, occupies middle and right half, leafy garden in left, beautiful warm summer late-afternoon light, canopy and wood joinery fully visible. This is the homepage hero photograph.",
+      "references": [
+        "C:/Users/badja/Documents/Projects_Developement/Websites/houses-commerce/assets/3.jpg"
+      ]
+    },
+    {
+      "key": "garden-swing",
+      "prompt": "Use case: photorealistic-natural. Asset type: architectural product photography for All in One, a Bulgarian bespoke timber, roofing and furnishing company. A single landscape 16:9 image, extremely photorealistic architectural magazine photography, tactile real materials, natural colour, authentic European garden, 35mm lens, straight verticals. No text, no logos, no watermark, no collage, no people, no distorted or impossible joinery. Reference brochure is only for the product's design language; never reproduce brochure text or layout. Subject: beautifully crafted freestanding A-frame solid oak garden swing like the triangular wooden swing shown in reference brochure 3. Two-seat slatted swing seat suspended symmetrically with sturdy ropes from a structurally believable oak top beam, curved-looking upholstered pale cushions, precise timber joinery and rounded solid wood edges. Entire A-frame visible in the garden, no pergola. Soft warm afternoon sunlight, green lawn, flowering grasses, wooded rolling hills behind. Product fills 60 percent of frame, slightly off-centre natural editorial composition.",
+      "references": [
+        "C:/Users/badja/Documents/Projects_Developement/Websites/houses-commerce/assets/3.jpg"
+      ]
+    },
+    {
+      "key": "veranda",
+      "prompt": "Use case: photorealistic-natural. Asset type: architectural product photography for All in One, a Bulgarian bespoke timber, roofing and furnishing company. A single landscape 16:9 image, extremely photorealistic architectural magazine photography, tactile real materials, natural colour, authentic European garden, 35mm lens, straight verticals. No text, no logos, no watermark, no collage, no people, no distorted or impossible joinery. Reference brochure is only for the product's design language; never reproduce brochure text or layout. Subject: a handcrafted covered timber veranda attached along the side of a modest white-plastered European home, warm oak columns and beams, timber decking with two broad steps into a lush garden, graceful linear slatted side screen, modest outdoor dining table and chairs. The canopy is a continuous shelter with visibly weatherproof top, not just uncovered roof slats. Show entire veranda construction and house wall, three-quarter angle from garden. Bright soft morning light, realistic European landscaping.",
+      "references": [
+        "C:/Users/badja/Documents/Projects_Developement/Websites/houses-commerce/assets/3.jpg"
+      ]
+    },
+    {
+      "key": "garden-furniture",
+      "prompt": "Use case: photorealistic-natural. Asset type: architectural product photography for All in One, a Bulgarian bespoke timber, roofing and furnishing company. A single landscape 16:9 image, extremely photorealistic architectural magazine photography, tactile real materials, natural colour, authentic European garden, 35mm lens, straight verticals. No text, no logos, no watermark, no collage, no people, no distorted or impossible joinery. Reference brochure is only for the product's design language; never reproduce brochure text or layout. Subject: custom solid oak outdoor furniture set: low three-seater sofa with pale linen cushions, two beautifully built slatted lounge armchairs and an elegant timber coffee table. Focus on grain, rounded joinery, precision and substantial craft. Furniture arranged on a natural stone terrace in a leafy Bulgarian garden, close enough to show tactile material, no pavilion blocking sight. Warm dappled summer light, realistic soft shadows, calm comfortable atmosphere.",
+      "references": [
+        "C:/Users/badja/Documents/Projects_Developement/Websites/houses-commerce/assets/3.jpg"
+      ]
+    },
+    {
+      "key": "ceramic-roof",
+      "prompt": "Use case: photorealistic-natural. Asset type: architectural product photography for All in One, a Bulgarian bespoke timber, roofing and furnishing company. A single landscape 16:9 image, extremely photorealistic architectural magazine photography, tactile real materials, natural colour, authentic European garden, 35mm lens, straight verticals. No text, no logos, no watermark, no collage, no people, no distorted or impossible joinery. Reference brochure is only for the product's design language; never reproduce brochure text or layout. Subject: modern European countryside home with a very prominent gabled roof covered in high-quality small flat overlapping ceramic roof tiles in rich graphite-grey with subtle mineral variation, clear visible individual rows of ceramic tiles, roof ridge and eaves expertly detailed. Not standing-seam metal, not asphalt shingles. Frame from a slightly elevated oblique angle, roof occupies the top two thirds and much of the photograph, discreet integrated flush dark solar panels on a small section at the back, white wall and timber porch beneath, green garden and forest background. Reference brochure 4 shows the material idea; faithfully capture the premium ceramic roofing but create an original realistic image. Morning sun grazes roof rows.",
+      "references": [
+        "C:/Users/badja/Documents/Projects_Developement/Websites/houses-commerce/assets/4.jpg"
+      ]
+    },
+    {
+      "key": "ceramic-tiles",
+      "prompt": "Use case: product-mockup. Asset type: All in One ceramic roofing category image. Landscape 16:9 single premium product photograph of six substantial charcoal-grey flat ceramic roof tiles, partly laid in overlapping rows on a simple oak workbench. Clearly ceramic clay tiles, with subtle matte glazed surfaces, bevelled edges, visible depth and mounting nibs on the one tile leaned on its side. One natural terracotta unglazed cut edge visible to communicate ceramic body. Product maker showroom photograph, soft side daylight, muted neutral background and a blurred garden beyond, realistic tiny mineral variations, no text, brands, logos, watermark or illustration. Not steel sheets or asphalt."
+    },
+    {
+      "key": "interior-lighting",
+      "prompt": "Use case: photorealistic-natural. Asset type: architectural product photography for All in One, a Bulgarian bespoke timber, roofing and furnishing company. A single landscape 16:9 image, extremely photorealistic architectural magazine photography, tactile real materials, natural colour, authentic European garden, 35mm lens, straight verticals. No text, no logos, no watermark, no collage, no people, no distorted or impossible joinery. Reference brochure is only for the product's design language; never reproduce brochure text or layout. Subject: beautiful contemporary Bulgarian home dining and lounge interior in warm twilight, a sculptural dark bronze circular LED pendant above a solid oak dining table with rounded wooden chairs, softly lit timber slat wall, glowing floor lamp at side, daylight fading through garden-facing glazing. Similar lighting design language to the ring-shaped pendant lights in brochure 4 but original interior. Light is the clear subject. Elegant realistic lighting with no blown-out highlights, neutral linen upholstery, tactile oak and plaster. Dark enough for atmosphere but readable detail.",
+      "references": [
+        "C:/Users/badja/Documents/Projects_Developement/Websites/houses-commerce/assets/4.jpg"
+      ]
+    },
+    {
+      "key": "interior-furniture",
+      "prompt": "Use case: photorealistic-natural. Asset type: architectural product photography for All in One, a Bulgarian bespoke timber, roofing and furnishing company. A single landscape 16:9 image, extremely photorealistic architectural magazine photography, tactile real materials, natural colour, authentic European garden, 35mm lens, straight verticals. No text, no logos, no watermark, no collage, no people, no distorted or impossible joinery. Reference brochure is only for the product's design language; never reproduce brochure text or layout. Subject: sophisticated handcrafted oak interior furniture in a European home, a beautiful low sideboard with clean warm oak grain and finely detailed doors, matching oak dining table with rounded corners and comfortable timber dining chairs. Quiet neutral living room, plaster walls, linen, one ceramic bowl, a tree seen through garden-facing glazing, natural morning light. Faithfully evokes interior furnishing category from brochure 4 but a new room, frame furniture as focal point, no large empty roof area, no text.",
+      "references": [
+        "C:/Users/badja/Documents/Projects_Developement/Websites/houses-commerce/assets/4.jpg"
+      ]
+    }
+  ]
+}
